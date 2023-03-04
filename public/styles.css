@@ -100,6 +100,35 @@ img {
     width: 40em;
 }
 
+#my-list-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#side-panel-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#del-alert {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30%;
+}
+
+#del-selection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
 #header-div {
     display: flex;
     justify-content: center;
@@ -126,27 +155,12 @@ img {
     justify-content: space-between;
 }
 
-#my-list-div {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#side-panel-div {
-    display: flex;
-    align-items: center;
-}
-
-
 #purchased {
-    font-family: 'Lobster', cursive;
-    font-size: 1.5rem;
-    position: fixed;
     right: 2%;
-    top: 3%;
-    width: 7em;
-    height: 1.75rem;
+}
+
+#back-btn {
+    left: 2%;
 }
 
 
@@ -192,13 +206,36 @@ img {
     width: 10%;
     margin-bottom: 200px;
 }
-/*///////////****** CLASS STYLING ******** //////////////*/
 
+#del-btn {
+    background-color: #E8630A;
+    color: white;
+}
+/*///////////****** CLASS STYLING ******** //////////////*/
+.header-btn {
+    font-family: 'Lobster', cursive;
+    font-size: 1.5rem;
+    position: fixed;
+    top: 3%;
+    width: 7em;
+    height: 1.75rem;
+}
 
 .pencil {
     height: 2em;
     background-color: #9CD3D3;
     box-shadow: none;
+}
+
+.crossed-out {
+    text-decoration:  line-through;
+    color: gray;
+}
+
+.grayed-out {
+    color: gray;
+    background-color: lightgray;
+
 }
 
 
@@ -209,7 +246,7 @@ img {
         margin: 0px;
     }
 
-    #purchased {
+    .header-btn {
         font-size: 0.7rem;
     }
     ::placeholder {
@@ -245,6 +282,7 @@ img {
     }
 
     #edit-btn {
+        width: 5em;
         margin-bottom: 30px;
     }
 
