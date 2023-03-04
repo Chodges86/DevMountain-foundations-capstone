@@ -17,5 +17,7 @@ app.use(bp.urlencoded({extended: true}))
 app.get('/api/get-all', controller.getAll)
 app.post('/api/add-item', controller.addItem)
 app.put('/api/edit', controller.editItem)
+app.put('/api/purchased', controller.togglePurchased)
+app.delete('/api/remove/:id', controller.removeFromList)
 
 app.listen(SERVER_PORT, () => console.log(`Here we go on ${SERVER_PORT}`))

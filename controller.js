@@ -12,13 +12,15 @@ const sequelize = new Sequelize(CONNECTION_STRING, {
     }
 })
 
-async function addItem(req, res) {
-    const { description, url } = req.body
-    const [result] =  await sequelize.query(
-        `INSERT INTO current_list (description, url)
-        VALUES ('${description}', '${url}') RETURNING *;`
+function addItem(req, res) {
+    const { description, url, is_purchased } = req.body
+    sequelize.query(
+        `INSERT INTO current_list (description, url, is_purchased)
+        VALUES ('${description}', '${url}', ${is_purchased});
+        SELECT * FROM current_list
+        WHERE is_purchased = false;`
     )
-    res.status(200).send(result)
+    .then((dbRes) => res.status(200).send(dbRes[0]))
 }
 
 function getAll(req, res) {
@@ -27,7 +29,8 @@ function getAll(req, res) {
 
     sequelize
     .query(
-        'SELECT * FROM current_list;'
+        `SELECT * FROM current_list
+        WHERE is_purchased = false;`
     )
     .then((dbRes) => res.status(200).send(dbRes[0]))
 }
@@ -42,7 +45,8 @@ function editItem(req, res) {
             SET url = '${url}'
             WHERE id = ${id};
     
-            SELECT * FROM current_list;
+            SELECT * FROM current_list
+            WHERE is_purchased = false;
             `
         )
         .then((dbRes) => res.status(200).send(dbRes[0])) 
@@ -52,7 +56,8 @@ function editItem(req, res) {
             SET description = '${description}'
             WHERE id = ${id};
     
-            SELECT * FROM current_list;
+            SELECT * FROM current_list
+            WHERE is_purchased = false;
             `
         )
         .then((dbRes) => res.status(200).send(dbRes[0])) 
@@ -63,19 +68,44 @@ function editItem(req, res) {
             url = '${url}'
             WHERE id = ${id};
     
-            SELECT * FROM current_list;
+            SELECT * FROM current_list
+            WHERE is_purchased = false;
             `
         )
         .then((dbRes) => res.status(200).send(dbRes[0])) 
     }
+}
 
-    
-    
+function togglePurchased(req, res) {
+    const { id, status } = req.body
+    console.log(id)
+    sequelize.query(
+        `UPDATE current_list
+        SET is_purchased = ${status}
+        WHERE id = ${id};
+        `
+    )
+}
+
+function removeFromList(req, res) {
+    const id = req.params.id
+    console.log(id)
+    sequelize.query(
+        `DELETE
+        FROM current_list
+        WHERE id= ${id};
+        
+        SELECT * FROM current_list
+        WHERE is_purchased = false;`
+    )
+    .then((dbRes) => res.status(200).send(dbRes[0]))
 }
     
 
 module.exports = {
     addItem,
     getAll,
-    editItem
+    editItem,
+    togglePurchased,
+    removeFromList
 }
