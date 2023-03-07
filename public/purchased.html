@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Purchased</title>
+    <title>Get This! : Purchased</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,10 +20,20 @@
     />
 </head>
 <body>
-  <div id="header-div">
+  <div class="header-div">
     <h1>Get This!</h1>
     <button id="back-btn" class="header-btn">Back</button>
   </div>
+  <div id="title-div">
+    <h1>Purchased List</h1>
+  </div>
+  <div id = purchased-main-div>
+    <div id="side-panel-div">
     </div>
+    <ul id="purchased-list">
+    </ul>
+  </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="purchased.js"></script>
 </body>
 </html>

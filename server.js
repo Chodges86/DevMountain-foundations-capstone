@@ -14,7 +14,7 @@ app.use(cors())
 app.use(bp.json())
 app.use(bp.urlencoded({extended: true}))
 
-app.get('/api/get-all', controller.getAll)
+app.get('/api/get-all/:is_purchased', controller.getAll)
 app.post('/api/add-item', controller.addItem)
 app.put('/api/edit', controller.editItem)
 app.put('/api/purchased', controller.togglePurchased)

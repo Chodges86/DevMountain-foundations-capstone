@@ -11,7 +11,7 @@ CREATE TABLE current_list(
 
 INSERT INTO current_list (description, url, is_purchased)
 VALUES ('Boat Paddle', 'https://www.amazon.com/dp/B003DK3GSC?pd_rd_i=B003DK3GSC&pf_rd_p=b000e0a0-9e93-480f-bf78-a83c8136dfcb&pf_rd_r=TR0KMTE31HSZHZVY74JM&pd_rd_wg=aRWkM&pd_rd_w=TyecS&pd_rd_r=99b43dcd-81d6-458d-a34a-bd4cd7a2cb99', false),
-('Boat Trailer Taillights', 'https://www.amazon.com/CZC-AUTO-Submersible-Marine-Replacement-Incandescent/dp/B0747T8VZQ/ref=sr_1_6?keywords=boat+tail+lights&qid=1677955407&sprefix=boat+tail%2Caps%2C134&sr=8-6', false),
+('Boat Trailer Tail lights', 'https://www.amazon.com/CZC-AUTO-Submersible-Marine-Replacement-Incandescent/dp/B0747T8VZQ/ref=sr_1_6?keywords=boat+tail+lights&qid=1677955407&sprefix=boat+tail%2Caps%2C134&sr=8-6', false),
 ('Record Player', 'https://www.amazon.com/Bluetooth-Belt-Driven-Turntable-Speakers-Headphone/dp/B07N3WYLKZ/ref=sr_1_3?crid=9X50KD1X1FSV&keywords=record+player&qid=1677955516&sprefix=record+player%2Caps%2C129&sr=8-3', false),
 ('Golden Retriever', 'https://puppies.com/find-a-puppy/golden-retriever/mississippi/hernando', false),
 ('3 wheeler light bulb', 'https://www.amazon.com/HELLA-A3603-Miniature-Standard-Bulb/dp/B00IKLOL4C/ref=asc_df_B00IKLOL4C/?tag=hyprod-20&linkCode=df0&hvadid=607186602417&hvpos=&hvnetw=g&hvrand=12687694965586222905&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9013733&hvtargid=pla-1710460508625&th=1', false),

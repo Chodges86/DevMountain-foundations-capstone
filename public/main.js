@@ -11,7 +11,7 @@ let editItemID;
 
 const getAll = () =>
   axios
-    .get(`${baseUrl}/api/get-all`)
+    .get(`${baseUrl}/api/get-all/${false}`)
     .then((res) => createListElement(res.data));
 
 const add = (body) =>
@@ -45,7 +45,7 @@ function addItem(e) {
   const body = {
     description: description.value,
     url: url.value,
-    isPurchased: false,
+    is_purchased: false,
   };
   description.value = "";
   url.value = "";
@@ -54,30 +54,8 @@ function addItem(e) {
 
 addForm.addEventListener("submit", addItem);
 
-function displayList(data) {
-  console.log(data);
-}
-
-function createListElement(data) {
-  ul.innerHTML = "";
-
-  for (i = 0; i < data.length; i++) {
-    const { description, url, id } = data[i];
-    const li = document.createElement("li");
-    li.innerHTML = `
-    <p id="p-${id}" onClick=displayPreviewURL('${url}')>${description}</p>
-    <button id="go-${id}" onClick=goToURL('${url}')>Go</button>
-    <button id="purchased-${id}" onClick=purchasedClicked(${id})>Purchased</button>
-    <button id="${id}" class="pencil" onClick="displayEditForm(this.id)">
-        <img src="./images/pencil.png" alt="buttonpng" border="0" />
-      </button>
-    <button id="del-${id}" onClick=displayDeleteMessage(${id})>X</>
-  `;
-    ul.appendChild(li);
-  }
-}
-
 function goToURL(url) {
+  console.log(url);
   window.open(url, "_blank");
 }
 
@@ -91,16 +69,51 @@ function displayPreviewURL(url) {
   console.log(url2);
 }
 
+function displayList(data) {
+  console.log(data);
+}
+
+function createListElement(data) {
+  ul.innerHTML = "";
+
+  for (i = 0; i < data.length; i++) {
+    const { description, url, id } = data[i];
+    selectedItemURL = url
+    selectedDescription = description
+    const li = document.createElement("li");
+    li.id = `li-${id}`
+    li.innerHTML = `
+    <p id="p-${id}" onClick=displayPreviewURL('${url}')>${description}</p>
+    <button id="go-${id}" class="image-btn" onClick=goToURL('${url}')>
+        <img src="./images/arrow.png" alt="go-arrow" border="0" />
+    </button>
+    <button id="purchased-${id}" class="image-btn" onClick="purchasedClicked(${id})">
+        <img src="./images/check.png" alt="checkmarkpng" border="0" />
+    </button>
+    <button id="${id}" class="image-btn" onClick="displayEditForm(this.id)">
+        <img src="./images/pencil.png" alt="buttonpng" border="0" />
+      </button>
+    <button id="del-${id}" class="image-btn" onClick=displayDeleteMessage(${id})>
+        <img src="./images/deleteX.png" alt="buttonpng" border="0" />
+    </button>
+  `;
+    ul.appendChild(li);
+  }
+}
+
 function displayEditForm(id) {
   editItemID = id;
   sidePanelDiv.innerHTML = `
-    <div id="edit-form">
+    <div id="edit-form" class="prompt">
+    <h1>Edit</h1>
     <form>
         <input type="text" id="edit-description" placeholder="Edit Description" />
         <input type="text" id="edit-url" placeholder="Edit URL here" />
+        <div class="btn-selection">
         <button id="edit-btn">Edit</button>
+        <button>Cancel</button>
+        </div>
       </form>
-      
       </div>
     `;
   const editBtn = document.getElementById("edit-btn");
@@ -108,8 +121,6 @@ function displayEditForm(id) {
 }
 
 function editItem(e) {
-  // e.preventDefault()
-  console.log("Hit editItem");
   const desc = document.getElementById("edit-description");
   const url = document.getElementById("edit-url");
   const body = {
@@ -122,33 +133,30 @@ function editItem(e) {
 }
 
 function purchasedClicked(id) {
-  console.log(id);
+  console.log(id)
   const pElement = document.getElementById(`p-${id}`);
   const purchasedBtn = document.getElementById(`purchased-${id}`);
   const goBtn = document.getElementById(`go-${id}`);
+  const li = document.getElementById(`li-${id}`)
   let isPurchased;
 
   if (pElement.classList.contains("crossed-out")) {
-    // Item has already been marked as purchased
-    pElement.classList.remove("crossed-out");
-    purchasedBtn.textContent = "Purchased";
-    goBtn.classList.remove("grayed-out");
-    goBtn.disabled = false;
-    isPurchased = false;
+    pElement.classList.remove("crossed-out")
+    purchasedBtn.innerHTML = '<img src = "./images/check.png" />'
+    goBtn.disabled = false
+    isPurchased = false
   } else {
-    // Item is being marked as purchased
-    pElement.classList.add("crossed-out");
-    purchasedBtn.textContent = "Un-Mark";
-    goBtn.classList.add("grayed-out");
-    goBtn.disabled = true;
-    isPurchased = true;
+    pElement.classList.add("crossed-out")
+    purchasedBtn.innerHTML = '<img src = "./images/uncheck.png" />'
+    goBtn.disabled = true
+    isPurchased = true
   }
 
   const body = {
     id: id,
     status: isPurchased,
   };
-  console.log(body);
+
   togglePurchased(body);
 }
 
@@ -156,10 +164,10 @@ function displayDeleteMessage(id) {
   const pElement = document.getElementById(`p-${id}`);
 
   sidePanelDiv.innerHTML = `
-    <div id="del-alert">
+    <div id="del-message" class="prompt">
     <h1>Delete This?</h1>
     <p>${pElement.textContent}</p>
-    <div id="del-selection">
+    <div class="btn-selection">
     <button id="del-btn" onClick="deleteItem(${id})">Delete</button>
     <button onClick="removeDeleteDisplay()">Cancel</button>
     </div>
@@ -173,12 +181,19 @@ function deleteItem(itemID) {
     id: itemID,
   };
   removeFromList(itemID);
-  removeDeleteDisplay()
+  removeDeleteDisplay();
 }
 
 function removeDeleteDisplay() {
-  const delAlert = document.getElementById('del-alert')
-  sidePanelDiv.removeChild(delAlert)
+  const prompt = document.getElementById("del-message");
+  sidePanelDiv.removeChild(prompt);
+  const welcomeDiv = document.createElement('div')
+  welcomeDiv.id = 'welcome'
+  welcomeDiv.innerHTML = `
+  <h1>Welcome to Get This!</h1>
+        <p>Get started adding things you find online.  Simply copy and paste the URL from the website and add a description.</p>
+  `
+  sidePanelDiv.appendChild(welcomeDiv)
 }
 
 getAll();

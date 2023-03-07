@@ -14,6 +14,7 @@ const sequelize = new Sequelize(CONNECTION_STRING, {
 
 function addItem(req, res) {
     const { description, url, is_purchased } = req.body
+    console.log(req.body)
     sequelize.query(
         `INSERT INTO current_list (description, url, is_purchased)
         VALUES ('${description}', '${url}', ${is_purchased});
@@ -25,12 +26,11 @@ function addItem(req, res) {
 
 function getAll(req, res) {
 
-    console.log("Hit getAll")
-
+    const isPurchased = req.params.is_purchased
     sequelize
     .query(
         `SELECT * FROM current_list
-        WHERE is_purchased = false;`
+        WHERE is_purchased = ${isPurchased};`
     )
     .then((dbRes) => res.status(200).send(dbRes[0]))
 }
@@ -85,6 +85,7 @@ function togglePurchased(req, res) {
         WHERE id = ${id};
         `
     )
+    .then(() => res.sendStatus(200))
 }
 
 function removeFromList(req, res) {
