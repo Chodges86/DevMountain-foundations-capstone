@@ -1,7 +1,0 @@
-
-Possible Features to add: 
-
-When purchased is click to a cross out until page reloads.  Button should
-then change to mark unpurchased.
-
-Make sure description is not too long
